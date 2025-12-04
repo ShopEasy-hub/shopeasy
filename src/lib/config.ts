@@ -25,7 +25,7 @@
 // - No trailing slash at the end
 // - Must match your deployed site exactly
 //
-const PRODUCTION_URL = 'https://your-production-domain.com';
+const PRODUCTION_URL = 'https://shopeasy.vercel.app';
 // ================================================================
 
 // Automatically detect if we're in production or development
