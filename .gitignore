@@ -1,0 +1,11 @@
+# Ignore Visual Studio temp folder
+.vs/
+
+# Ignore node dependencies
+node_modules/
+
+# Ignore build output
+dist/
+
+# Ignore local env file
+.env
