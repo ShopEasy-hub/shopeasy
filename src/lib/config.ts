@@ -28,7 +28,7 @@
 <<<<<<< HEAD
 const PRODUCTION_URL = 'https://your-production-domain.com';
 =======
-const PRODUCTION_URL = 'https://shopeasy.vercel.app';
+const PRODUCTION_URL = 'https://shopeasy-lemon.vercel.app';
 >>>>>>> beff73edb9b900dd348647610707c57653a62d28
 // ================================================================
 
