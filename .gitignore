@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # dependencies
 node_modules/
 
@@ -10,3 +11,16 @@ build/
 .vscode/
 .env
 .vs/
+=======
+# Ignore Visual Studio temp folder
+.vs/
+
+# Ignore node dependencies
+node_modules/
+
+# Ignore build output
+dist/
+
+# Ignore local env file
+.env
+>>>>>>> beff73edb9b900dd348647610707c57653a62d28
