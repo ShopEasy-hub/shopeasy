@@ -1,5 +1,6 @@
 @custom-variant dark (&:is(.dark *));
 
+<<<<<<< HEAD
 /* Mobile viewport optimization */
 @media (max-width: 768px) {
   :root {
@@ -7,6 +8,8 @@
   }
 }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
 /* Touch interaction improvements for mobile/tablet */
 .touch-manipulation {
   touch-action: manipulation;
@@ -21,6 +24,7 @@
   }
 }
 
+<<<<<<< HEAD
 /* Responsive table handling - add horizontal scroll on mobile */
 @media (max-width: 768px) {
   table {
@@ -38,6 +42,8 @@
   }
 }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
 /* Print styles for receipts */
 @media print {
   body * {
@@ -268,4 +274,8 @@
 
 html {
   font-size: var(--font-size);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750

@@ -1050,14 +1050,26 @@
     min-width: 8rem;
   }
 
+<<<<<<< HEAD
   .min-w-\[140px\] {
     min-width: 140px;
+=======
+  .min-w-\[180px\] {
+    min-width: 180px;
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
   }
 
   .min-w-\[200px\] {
     min-width: 200px;
   }
 
+<<<<<<< HEAD
+=======
+  .min-w-\[250px\] {
+    min-width: 250px;
+  }
+
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
   .min-w-\[var\(--radix-select-trigger-width\)\] {
     min-width: var(--radix-select-trigger-width);
   }
@@ -1289,18 +1301,24 @@
     margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
   }
 
+<<<<<<< HEAD
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
   .gap-y-0\.5 {
     row-gap: calc(var(--spacing) * .5);
   }
 
+<<<<<<< HEAD
   .gap-y-1 {
     row-gap: calc(var(--spacing) * 1);
   }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
   .self-start {
     align-self: flex-start;
   }
@@ -1309,12 +1327,15 @@
     justify-self: flex-end;
   }
 
+<<<<<<< HEAD
   .truncate {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
   .overflow-auto {
     overflow: auto;
   }
@@ -3170,6 +3191,7 @@
   }
 
   @media (width >= 40rem) {
+<<<<<<< HEAD
     .sm\:flex {
       display: flex;
     }
@@ -3182,18 +3204,23 @@
   }
 
   @media (width >= 40rem) {
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
     .sm\:inline {
       display: inline;
     }
   }
 
   @media (width >= 40rem) {
+<<<<<<< HEAD
     .sm\:w-auto {
       width: auto;
     }
   }
 
   @media (width >= 40rem) {
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
     .sm\:max-w-lg {
       max-width: var(--container-lg);
     }
@@ -3206,6 +3233,7 @@
   }
 
   @media (width >= 40rem) {
+<<<<<<< HEAD
     .sm\:min-w-\[180px\] {
       min-width: 180px;
     }
@@ -3218,6 +3246,8 @@
   }
 
   @media (width >= 40rem) {
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
     .sm\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -3242,18 +3272,22 @@
   }
 
   @media (width >= 40rem) {
+<<<<<<< HEAD
     .sm\:gap-3 {
       gap: calc(var(--spacing) * 3);
     }
   }
 
   @media (width >= 40rem) {
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
     .sm\:gap-4 {
       gap: calc(var(--spacing) * 4);
     }
   }
 
   @media (width >= 40rem) {
+<<<<<<< HEAD
     .sm\:p-6 {
       padding: calc(var(--spacing) * 6);
     }
@@ -3266,6 +3300,8 @@
   }
 
   @media (width >= 40rem) {
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
     .sm\:text-left {
       text-align: left;
     }
@@ -3751,12 +3787,15 @@
   }
 }
 
+<<<<<<< HEAD
 @media (width <= 768px) {
   :root {
     --font-size: 14px;
   }
 }
 
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
 .touch-manipulation {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -3767,6 +3806,7 @@
     min-width: 44px;
     min-height: 44px;
   }
+<<<<<<< HEAD
 
   table {
     white-space: nowrap;
@@ -3778,6 +3818,8 @@
   input, textarea, select {
     font-size: 16px !important;
   }
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
 }
 
 @media print {

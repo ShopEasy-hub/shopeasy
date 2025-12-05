@@ -357,14 +357,24 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Header */}
+<<<<<<< HEAD
         <header className="bg-card border-b px-3 sm:px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+=======
+        <header className="bg-card border-b px-6 py-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
+<<<<<<< HEAD
                 className="lg:hidden flex-shrink-0"
+=======
+                className="lg:hidden"
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
               >
                 <Menu className="w-5 h-5" />
               </Button>
@@ -372,6 +382,7 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 variant="ghost"
                 size="icon"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
+<<<<<<< HEAD
                 className="hidden lg:flex flex-shrink-0"
               >
                 {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -383,13 +394,32 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                   <span className="truncate">Company: {appState.companyName}</span>
                   <span className="hidden sm:inline mx-1">|</span>
                   <span className="truncate w-full sm:w-auto">
+=======
+                className="hidden lg:flex"
+              >
+                {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
+              <div>
+                <h1>ShopEasy POS Dashboard</h1>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Building2 className="w-3 h-3" />
+                  <span>Company: {appState.companyName}</span>
+                  <span className="mx-1">|</span>
+                  <span>
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
                     Branch: {branches.find((b) => b.id === appState.currentBranchId)?.name || 'Not selected'}
                   </span>
                   {appState.currentWarehouseId && (
                     <>
+<<<<<<< HEAD
                       <span className="hidden sm:inline mx-1">|</span>
                       <Warehouse className="w-3 h-3 flex-shrink-0" />
                       <span className="truncate">
+=======
+                      <span className="mx-1">|</span>
+                      <Warehouse className="w-3 h-3" />
+                      <span>
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
                         Warehouse: {warehouses.find((w) => w.id === appState.currentWarehouseId)?.name || 'N/A'}
                       </span>
                     </>
@@ -398,6 +428,7 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
               </div>
             </div>
 
+<<<<<<< HEAD
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {(appState.userRole === 'owner' || appState.userRole === 'admin') && (
                 <Button
@@ -405,11 +436,19 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                   size="sm"
                   onClick={() => setShowContextSelector(true)}
                   className="hidden sm:flex"
+=======
+            <div className="flex items-center gap-3">
+              {(appState.userRole === 'owner' || appState.userRole === 'admin') && (
+                <Button
+                  variant="outline"
+                  onClick={() => setShowContextSelector(true)}
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
                 >
                   <GitBranch className="w-4 h-4 mr-2" />
                   Switch Context
                 </Button>
               )}
+<<<<<<< HEAD
               {(appState.userRole === 'owner' || appState.userRole === 'admin') && (
                 <Button
                   variant="outline"
@@ -420,20 +459,33 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                   <GitBranch className="w-4 h-4" />
                 </Button>
               )}
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
             </div>
           </div>
 
           {/* Quick Actions */}
+<<<<<<< HEAD
           <div className="flex flex-wrap gap-2 sm:gap-3">
+=======
+          <div className="flex flex-wrap gap-3">
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
             {canAccessPage(appState.userRole, 'pos') && (
               <Button 
                 size="lg"
                 onClick={() => onNavigate('pos')}
+<<<<<<< HEAD
                 className="flex-1 min-w-[140px] sm:min-w-[180px]"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 <span className="hidden sm:inline">Record Sale</span>
                 <span className="sm:hidden">Sale</span>
+=======
+                className="flex-1 min-w-[180px]"
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Record Sale
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
               </Button>
             )}
             {canAccessPage(appState.userRole, 'returns') && (
@@ -441,11 +493,18 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 size="lg"
                 variant="outline"
                 onClick={() => onNavigate('returns')}
+<<<<<<< HEAD
                 className="flex-1 min-w-[140px] sm:min-w-[180px]"
               >
                 <RotateCcw className="w-5 h-5 mr-2" />
                 <span className="hidden sm:inline">Process Return</span>
                 <span className="sm:hidden">Return</span>
+=======
+                className="flex-1 min-w-[180px]"
+              >
+                <RotateCcw className="w-5 h-5 mr-2" />
+                Process Return
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
               </Button>
             )}
             {canAccessPage(appState.userRole, 'short-dated') && (
@@ -453,6 +512,7 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 size="lg"
                 variant="outline"
                 onClick={() => onNavigate('short-dated')}
+<<<<<<< HEAD
                 className="flex-1 min-w-[140px] sm:min-w-[180px] border-warning text-warning hover:bg-warning/10"
               >
                 <AlertTriangle className="w-5 h-5 mr-2" />
@@ -461,6 +521,15 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
               </Button>
             )}
             <div className="relative flex-1 min-w-[200px] sm:min-w-[250px]">
+=======
+                className="flex-1 min-w-[180px] border-warning text-warning hover:bg-warning/10"
+              >
+                <AlertTriangle className="w-5 h-5 mr-2" />
+                Short Dated
+              </Button>
+            )}
+            <div className="relative flex-1 min-w-[250px]">
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
               <div className="absolute left-3 top-1/2 -translate-y-1/2">
                 <Search className="w-5 h-5 text-muted-foreground" />
               </div>
@@ -478,7 +547,11 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
         </header>
 
         {/* Content */}
+<<<<<<< HEAD
         <div className="flex-1 overflow-auto p-3 sm:p-6">
+=======
+        <div className="flex-1 overflow-auto p-6">
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
           {/* Branch Info Banner for non-admin users */}
           {appState.userRole && !['owner', 'admin'].includes(appState.userRole) && (
             <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
