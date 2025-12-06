@@ -113,8 +113,9 @@ CREATE TABLE IF NOT EXISTS inventory (
     (branch_id IS NULL AND warehouse_id IS NOT NULL)
   ),
   
-  -- Prevent duplicate stock entries for same product in same location
-  CONSTRAINT unique_stock_per_location UNIQUE (product_id, branch_id, warehouse_id)
+  -- CRITICAL FIX: Prevent duplicate stock entries for same product in same location
+  -- NULLS NOT DISTINCT ensures NULL values are treated as equal for uniqueness
+  CONSTRAINT unique_stock_per_location UNIQUE NULLS NOT DISTINCT (product_id, branch_id, warehouse_id)
 );
 
 CREATE INDEX idx_inventory_organization ON inventory(organization_id);
@@ -137,9 +138,8 @@ CREATE TABLE IF NOT EXISTS transfers (
   to_branch_id UUID REFERENCES branches(id) ON DELETE CASCADE,
   to_warehouse_id UUID REFERENCES warehouses(id) ON DELETE CASCADE,
   
-  product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-  quantity INTEGER NOT NULL CHECK (quantity > 0),
-  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'completed')),
+  -- Note: product_id and quantity removed - now in transfer_items table
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'completed', 'in_transit')),
   notes TEXT,
   
   initiated_by UUID REFERENCES auth.users(id),
@@ -162,6 +162,21 @@ CREATE INDEX idx_transfers_organization ON transfers(organization_id);
 CREATE INDEX idx_transfers_from_branch ON transfers(from_branch_id);
 CREATE INDEX idx_transfers_to_branch ON transfers(to_branch_id);
 CREATE INDEX idx_transfers_status ON transfers(status);
+
+-- =====================================================
+-- TABLE: transfer_items
+-- =====================================================
+CREATE TABLE IF NOT EXISTS transfer_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  transfer_id UUID NOT NULL REFERENCES transfers(id) ON DELETE CASCADE,
+  product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  quantity INTEGER NOT NULL CHECK (quantity > 0),
+  unit_cost NUMERIC(10, 2) DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_transfer_items_transfer ON transfer_items(transfer_id);
+CREATE INDEX idx_transfer_items_product ON transfer_items(product_id);
 
 -- =====================================================
 -- TABLE: sales
@@ -324,45 +339,72 @@ CREATE TRIGGER handle_inventory_upsert
 -- =====================================================
 CREATE OR REPLACE FUNCTION complete_transfer()
 RETURNS TRIGGER AS $$
+DECLARE
+  transfer_item RECORD;
 BEGIN
   -- Only process when status changes to 'completed'
   IF NEW.status = 'completed' AND OLD.status != 'completed' THEN
     
-    -- Deduct from source location
-    IF NEW.from_branch_id IS NOT NULL THEN
-      UPDATE inventory
-      SET quantity = quantity - NEW.quantity,
-          updated_at = NOW()
-      WHERE product_id = NEW.product_id
-        AND branch_id = NEW.from_branch_id;
-    ELSIF NEW.from_warehouse_id IS NOT NULL THEN
-      UPDATE inventory
-      SET quantity = quantity - NEW.quantity,
-          updated_at = NOW()
-      WHERE product_id = NEW.product_id
-        AND warehouse_id = NEW.from_warehouse_id;
-    END IF;
+    RAISE NOTICE '🔄 Completing transfer: %', NEW.id;
     
-    -- Add to destination location (using UPSERT logic)
-    IF NEW.to_branch_id IS NOT NULL THEN
-      INSERT INTO inventory (organization_id, branch_id, product_id, quantity, updated_by)
-      VALUES (NEW.organization_id, NEW.to_branch_id, NEW.product_id, NEW.quantity, NEW.approved_by)
-      ON CONFLICT (product_id, branch_id, warehouse_id)
-      DO UPDATE SET
-        quantity = inventory.quantity + EXCLUDED.quantity,
-        updated_at = NOW(),
-        updated_by = EXCLUDED.updated_by;
-    ELSIF NEW.to_warehouse_id IS NOT NULL THEN
-      INSERT INTO inventory (organization_id, warehouse_id, product_id, quantity, updated_by)
-      VALUES (NEW.organization_id, NEW.to_warehouse_id, NEW.product_id, NEW.quantity, NEW.approved_by)
-      ON CONFLICT (product_id, branch_id, warehouse_id)
-      DO UPDATE SET
-        quantity = inventory.quantity + EXCLUDED.quantity,
-        updated_at = NOW(),
-        updated_by = EXCLUDED.updated_by;
-    END IF;
+    -- Loop through all items in this transfer
+    FOR transfer_item IN 
+      SELECT product_id, quantity 
+      FROM transfer_items 
+      WHERE transfer_id = NEW.id
+    LOOP
+      RAISE NOTICE '📦 Processing item: product=% qty=%', transfer_item.product_id, transfer_item.quantity;
+      
+      -- Deduct from source location
+      IF NEW.from_branch_id IS NOT NULL THEN
+        RAISE NOTICE '📤 Deducting % units from branch %', transfer_item.quantity, NEW.from_branch_id;
+        
+        UPDATE inventory
+        SET quantity = quantity - transfer_item.quantity,
+            updated_at = NOW()
+        WHERE product_id = transfer_item.product_id
+          AND branch_id = NEW.from_branch_id;
+          
+      ELSIF NEW.from_warehouse_id IS NOT NULL THEN
+        RAISE NOTICE '📤 Deducting % units from warehouse %', transfer_item.quantity, NEW.from_warehouse_id;
+        
+        UPDATE inventory
+        SET quantity = quantity - transfer_item.quantity,
+            updated_at = NOW()
+        WHERE product_id = transfer_item.product_id
+          AND warehouse_id = NEW.from_warehouse_id;
+      END IF;
+      
+      -- Add to destination location (using UPSERT logic)
+      IF NEW.to_branch_id IS NOT NULL THEN
+        RAISE NOTICE '📥 Adding % units to branch %', transfer_item.quantity, NEW.to_branch_id;
+        
+        INSERT INTO inventory (organization_id, branch_id, product_id, quantity, updated_by)
+        VALUES (NEW.organization_id, NEW.to_branch_id, transfer_item.product_id, transfer_item.quantity, NEW.approved_by)
+        ON CONFLICT ON CONSTRAINT unique_stock_per_location
+        DO UPDATE SET
+          quantity = inventory.quantity + EXCLUDED.quantity,
+          updated_at = NOW(),
+          updated_by = EXCLUDED.updated_by;
+          
+      ELSIF NEW.to_warehouse_id IS NOT NULL THEN
+        RAISE NOTICE '📥 Adding % units to warehouse %', transfer_item.quantity, NEW.to_warehouse_id;
+        
+        INSERT INTO inventory (organization_id, warehouse_id, product_id, quantity, updated_by)
+        VALUES (NEW.organization_id, NEW.to_warehouse_id, transfer_item.product_id, transfer_item.quantity, NEW.approved_by)
+        ON CONFLICT ON CONSTRAINT unique_stock_per_location
+        DO UPDATE SET
+          quantity = inventory.quantity + EXCLUDED.quantity,
+          updated_at = NOW(),
+          updated_by = EXCLUDED.updated_by;
+      END IF;
+      
+    END LOOP;
     
+    -- Set completion timestamp
     NEW.completed_at = NOW();
+    
+    RAISE NOTICE '✅ Transfer completed successfully: %', NEW.id;
   END IF;
   
   RETURN NEW;
@@ -407,7 +449,7 @@ BEGIN
   -- Add quantity back to branch inventory
   INSERT INTO inventory (organization_id, branch_id, product_id, quantity, updated_by)
   VALUES (NEW.organization_id, NEW.branch_id, NEW.product_id, NEW.quantity, NEW.processed_by)
-  ON CONFLICT (product_id, branch_id, warehouse_id)
+  ON CONFLICT ON CONSTRAINT unique_stock_per_location
   DO UPDATE SET
     quantity = inventory.quantity + EXCLUDED.quantity,
     updated_at = NOW(),
@@ -434,6 +476,7 @@ ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE suppliers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inventory ENABLE ROW LEVEL SECURITY;
 ALTER TABLE transfers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE transfer_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sales ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sale_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
@@ -546,6 +589,25 @@ CREATE POLICY "Managers can approve transfers"
     organization_id IN (
       SELECT organization_id FROM user_profiles
       WHERE id = auth.uid() AND role IN ('owner', 'manager')
+    )
+  );
+
+-- Transfer Items: Inherit from transfers
+CREATE POLICY "Users can view transfer items in their organization"
+  ON transfer_items FOR SELECT
+  USING (
+    transfer_id IN (
+      SELECT id FROM transfers
+      WHERE organization_id IN (SELECT organization_id FROM user_profiles WHERE id = auth.uid())
+    )
+  );
+
+CREATE POLICY "Users can create transfer items in their organization"
+  ON transfer_items FOR INSERT
+  WITH CHECK (
+    transfer_id IN (
+      SELECT id FROM transfers
+      WHERE organization_id IN (SELECT organization_id FROM user_profiles WHERE id = auth.uid())
     )
   );
 
@@ -669,7 +731,7 @@ COMMENT ON TABLE transfers IS 'Stock transfers between branches and warehouses w
 DO $$
 BEGIN
   RAISE NOTICE '✅ ShopEasy database migration completed successfully!';
-  RAISE NOTICE '📊 Tables created: organizations, branches, warehouses, products, suppliers, inventory, transfers, sales, sale_items, user_profiles, expenses, returns';
+  RAISE NOTICE '📊 Tables created: organizations, branches, warehouses, products, suppliers, inventory, transfers, transfer_items, sales, sale_items, user_profiles, expenses, returns';
   RAISE NOTICE '🔒 RLS policies enabled on all tables';
   RAISE NOTICE '⚙️ Triggers created: inventory upsert, transfer completion, sale deduction, return addition';
   RAISE NOTICE '🎯 Next step: Update your API layer to use Supabase client instead of KV store';

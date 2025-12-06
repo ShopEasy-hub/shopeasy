@@ -571,10 +571,21 @@ export async function adjustInventory(
 // =====================================================
 
 export async function getTransfers(orgId: string) {
-  // Simpler query without joins to avoid foreign key issues
+  // Fetch transfers with their items from transfer_items table
   const { data, error } = await supabase
     .from('transfers')
-    .select('*')
+    .select(`
+      *,
+      transfer_items (
+        product_id,
+        quantity,
+        unit_cost,
+        product:products (
+          name,
+          sku
+        )
+      )
+    `)
     .eq('organization_id', orgId)
     .order('created_at', { ascending: false });
 
@@ -583,27 +594,40 @@ export async function getTransfers(orgId: string) {
     throw error;
   }
   
-  console.log(`✅ Fetched ${data?.length || 0} transfers`);
+  console.log(`✅ Fetched ${data?.length || 0} transfers with items`);
   
-  // Transform snake_case to camelCase for backward compatibility
-  const transformedData = (data || []).map((transfer: any) => ({
-    ...transfer,
-    organizationId: transfer.organization_id,
-    productId: transfer.product_id,
-    fromBranchId: transfer.from_branch_id,
-    fromWarehouseId: transfer.from_warehouse_id,
-    toBranchId: transfer.to_branch_id,
-    toWarehouseId: transfer.to_warehouse_id,
-    initiatedBy: transfer.initiated_by,
-    approvedBy: transfer.approved_by,
-    createdAt: transfer.created_at,
-    updatedAt: transfer.updated_at,
-    // Also map to legacy field names for compatibility
-    sourceBranchId: transfer.from_branch_id,
-    sourceWarehouseId: transfer.from_warehouse_id,
-    destinationBranchId: transfer.to_branch_id,
-    destinationWarehouseId: transfer.to_warehouse_id,
-  }));
+  // Transform snake_case to camelCase and format items for backward compatibility
+  const transformedData = (data || []).map((transfer: any) => {
+    // Transform transfer_items to the format expected by the UI
+    const items = (transfer.transfer_items || []).map((item: any) => ({
+      productId: item.product_id,
+      quantity: item.quantity,
+      unitCost: item.unit_cost || 0,
+      name: item.product?.name || 'Unknown Product',
+      sku: item.product?.sku || 'N/A',
+    }));
+    
+    return {
+      ...transfer,
+      organizationId: transfer.organization_id,
+      productId: transfer.product_id,
+      fromBranchId: transfer.from_branch_id,
+      fromWarehouseId: transfer.from_warehouse_id,
+      toBranchId: transfer.to_branch_id,
+      toWarehouseId: transfer.to_warehouse_id,
+      initiatedBy: transfer.initiated_by,
+      approvedBy: transfer.approved_by,
+      createdAt: transfer.created_at,
+      updatedAt: transfer.updated_at,
+      // Also map to legacy field names for compatibility
+      sourceBranchId: transfer.from_branch_id,
+      sourceWarehouseId: transfer.from_warehouse_id,
+      destinationBranchId: transfer.to_branch_id,
+      destinationWarehouseId: transfer.to_warehouse_id,
+      // Add the formatted items array
+      items: items,
+    };
+  });
   
   return transformedData;
 }

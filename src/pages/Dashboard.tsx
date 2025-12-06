@@ -22,7 +22,6 @@ import {
   UserCheck,
   Menu,
   X,
-  Search,
   RotateCcw,
   Warehouse,
   Truck,
@@ -357,14 +356,14 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="bg-card border-b px-6 py-4">
+        <header className="bg-card border-b px-3 sm:px-6 py-4">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden"
+                className="lg:hidden flex-shrink-0"
               >
                 <Menu className="w-5 h-5" />
               </Button>
@@ -372,24 +371,24 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 variant="ghost"
                 size="icon"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="hidden lg:flex"
+                className="hidden lg:flex flex-shrink-0"
               >
                 {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
-              <div>
-                <h1>ShopEasy POS Dashboard</h1>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Building2 className="w-3 h-3" />
-                  <span>Company: {appState.companyName}</span>
-                  <span className="mx-1">|</span>
-                  <span>
+              <div className="min-w-0 flex-1">
+                <h1 className="truncate">ShopEasy POS Dashboard</h1>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+                  <Building2 className="w-3 h-3 flex-shrink-0" />
+                  <span className="truncate">Company: {appState.companyName}</span>
+                  <span className="hidden sm:inline mx-1">|</span>
+                  <span className="truncate w-full sm:w-auto">
                     Branch: {branches.find((b) => b.id === appState.currentBranchId)?.name || 'Not selected'}
                   </span>
                   {appState.currentWarehouseId && (
                     <>
-                      <span className="mx-1">|</span>
-                      <Warehouse className="w-3 h-3" />
-                      <span>
+                      <span className="hidden sm:inline mx-1">|</span>
+                      <Warehouse className="w-3 h-3 flex-shrink-0" />
+                      <span className="truncate">
                         Warehouse: {warehouses.find((w) => w.id === appState.currentWarehouseId)?.name || 'N/A'}
                       </span>
                     </>
@@ -398,29 +397,42 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {(appState.userRole === 'owner' || appState.userRole === 'admin') && (
                 <Button
                   variant="outline"
+                  size="sm"
                   onClick={() => setShowContextSelector(true)}
+                  className="hidden sm:flex"
                 >
                   <GitBranch className="w-4 h-4 mr-2" />
                   Switch Context
+                </Button>
+              )}
+              {(appState.userRole === 'owner' || appState.userRole === 'admin') && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowContextSelector(true)}
+                  className="sm:hidden"
+                >
+                  <GitBranch className="w-4 h-4" />
                 </Button>
               )}
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {canAccessPage(appState.userRole, 'pos') && (
               <Button 
                 size="lg"
                 onClick={() => onNavigate('pos')}
-                className="flex-1 min-w-[180px]"
+                className="flex-1 min-w-[140px] sm:min-w-[180px]"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
-                Record Sale
+                <span className="hidden sm:inline">Record Sale</span>
+                <span className="sm:hidden">Sale</span>
               </Button>
             )}
             {canAccessPage(appState.userRole, 'returns') && (
@@ -428,10 +440,11 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 size="lg"
                 variant="outline"
                 onClick={() => onNavigate('returns')}
-                className="flex-1 min-w-[180px]"
+                className="flex-1 min-w-[140px] sm:min-w-[180px]"
               >
                 <RotateCcw className="w-5 h-5 mr-2" />
-                Process Return
+                <span className="hidden sm:inline">Process Return</span>
+                <span className="sm:hidden">Return</span>
               </Button>
             )}
             {canAccessPage(appState.userRole, 'short-dated') && (
@@ -439,31 +452,18 @@ export function Dashboard({ appState, onNavigate, updateAppState }: DashboardPro
                 size="lg"
                 variant="outline"
                 onClick={() => onNavigate('short-dated')}
-                className="flex-1 min-w-[180px] border-warning text-warning hover:bg-warning/10"
+                className="flex-1 min-w-[140px] sm:min-w-[180px] border-warning text-warning hover:bg-warning/10"
               >
                 <AlertTriangle className="w-5 h-5 mr-2" />
-                Short Dated
+                <span className="hidden sm:inline">Short Dated</span>
+                <span className="sm:hidden">Expiring</span>
               </Button>
             )}
-            <div className="relative flex-1 min-w-[250px]">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                <Search className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search products, sales, customers..."
-                className="w-full px-10 py-2 border rounded-lg bg-background cursor-pointer"
-                onClick={() => {
-                  alert('Search Tip:\n\nUse the search features in each module:\n\n• Inventory: Search products by name, SKU, or barcode\n• Reports: Search sales by customer, phone, or sale ID\n• Returns: Search by receipt number\n\nA global search feature is planned for future releases.');
-                }}
-                readOnly
-              />
-            </div>
           </div>
         </header>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-3 sm:p-6">
           {/* Branch Info Banner for non-admin users */}
           {appState.userRole && !['owner', 'admin'].includes(appState.userRole) && (
             <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">

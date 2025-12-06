@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { SimpleErrorBoundary } from './components/SimpleErrorBoundary';
+import { NetworkErrorFallback } from './components/NetworkErrorFallback';
 import { getCurrentSession, getBranches, getUserProfile } from './lib/api';
 import { SetupPage } from './pages/SetupPage';
 import { LoginPage } from './pages/LoginPage';
@@ -28,8 +29,9 @@ import { DataViewer } from './pages/DataViewer';
 import AdminPanel from './pages/AdminPanel';
 import SuperAdminPanel from './pages/SuperAdminPanel';
 import ProductHistory from './pages/ProductHistory';
+import { DiagnosticNetwork } from './pages/DiagnosticNetwork';
 
-export type Page = 'setup' | 'login' | 'forgot-password' | 'reset-password' | 'dashboard' | 'pos' | 'inventory' | 'transfers' | 'reports' | 'users' | 'settings' | 'test-setup' | 'subscribe' | 'billing-cycle' | 'expenses' | 'returns' | 'return-history' | 'warehouses' | 'suppliers' | 'short-dated' | 'payment-callback' | 'data-viewer' | 'admin' | 'super-admin' | 'product-history';
+export type Page = 'setup' | 'login' | 'forgot-password' | 'reset-password' | 'dashboard' | 'pos' | 'inventory' | 'transfers' | 'reports' | 'users' | 'settings' | 'test-setup' | 'subscribe' | 'billing-cycle' | 'expenses' | 'returns' | 'return-history' | 'warehouses' | 'suppliers' | 'short-dated' | 'payment-callback' | 'data-viewer' | 'admin' | 'super-admin' | 'product-history' | 'diagnostic-network';
 
 export interface AppState {
   userId: string | null;
@@ -119,6 +121,9 @@ export default function App() {
     } else if (urlParams.get('super-admin') === 'true') {
       setCurrentPage('super-admin');
       setLoading(false);
+    } else if (urlParams.get('diagnostic-network') === 'true') {
+      setCurrentPage('diagnostic-network');
+      setLoading(false);
     } else if (
       urlParams.get('reference') || 
       urlParams.get('tx_ref') || 
@@ -141,10 +146,72 @@ export default function App() {
       console.log('✅ Session check complete:', session ? 'Logged in' : 'Not logged in');
       
       if (session) {
-        // User is logged in, fetch user data
-        // For now, we'll just set a default state
-        // In production, you'd fetch the user profile from the backend
-        setCurrentPage('dashboard');
+        // User is logged in, fetch user profile and restore appState
+        try {
+          console.log('📋 Restoring user session data...');
+          const userProfile = await getUserProfile();
+          
+          if (!userProfile) {
+            throw new Error('User profile not found');
+          }
+          
+          // Check and auto-expire trial if needed
+          try {
+            const { supabase } = await import('./lib/supabase');
+            const { data: expiryCheck } = await supabase.rpc('check_and_expire_trial', {
+              p_org_id: userProfile.organization_id
+            });
+            
+            // If status changed to expired, refetch org data
+            if (expiryCheck?.status === 'expired') {
+              console.log('⚠️ Trial/subscription expired during session restore');
+              const updatedProfile = await getUserProfile();
+              if (updatedProfile) {
+                userProfile.organization = updatedProfile.organization;
+              }
+            }
+          } catch (error) {
+            console.error('Error checking trial expiry:', error);
+            // Continue with session restore even if check fails
+          }
+          
+          // Determine the branch for the user
+          let branchId = userProfile.branch_id;
+          
+          // For admin/owner, set to first branch (headquarters)
+          if (['owner', 'admin'].includes(userProfile.role)) {
+            try {
+              const branches = await getBranches(userProfile.organization_id);
+              branchId = branches && branches.length > 0 ? branches[0].id : branchId;
+            } catch (error) {
+              console.error('Error loading branches:', error);
+            }
+          }
+          
+          // Restore the full appState
+          updateAppState({
+            userId: userProfile.id,
+            orgId: userProfile.organization_id,
+            userRole: userProfile.role,
+            user: { 
+              email: userProfile.email, 
+              name: userProfile.name, 
+              role: userProfile.role 
+            },
+            currentBranchId: branchId,
+            subscriptionStatus: userProfile.organization?.subscription_status || 'trial',
+            trialStartDate: userProfile.organization?.trial_start_date || new Date().toISOString(),
+            subscriptionEndDate: userProfile.organization?.subscription_end_date || null,
+            subscriptionPlan: userProfile.organization?.subscription_plan || null,
+          });
+          
+          console.log('✅ Session restored successfully');
+          setCurrentPage('dashboard');
+        } catch (profileError: any) {
+          console.error('❌ Error restoring session:', profileError);
+          // If we can't restore the profile, force login
+          setCurrentPage('login');
+        }
       } else {
         setCurrentPage('login');
       }
@@ -463,14 +530,13 @@ export default function App() {
 
       {currentPage === 'product-history' && (
         <ProductHistory
-          appState={{
-            organizationId: appState.orgId,
-            userId: appState.userId,
-            branchId: appState.currentBranchId,
-            userRole: appState.userRole
-          }}
-          onNavigate={handleNavigate}
+          appState={appState}
+          onNavigate={(page) => setCurrentPage(page)}
         />
+      )}
+
+      {currentPage === 'diagnostic-network' && (
+        <DiagnosticNetwork />
       )}
 
       {currentPage === 'admin' && (

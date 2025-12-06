@@ -149,7 +149,7 @@ export function ResetPassword({ onSuccess }: ResetPasswordProps) {
             <ul className="list-disc list-inside text-left space-y-0.5">
               <li>Use a mix of letters, numbers, and symbols</li>
               <li>Avoid common words or patterns</li>
-              <li>Don't reuse passwords from other accounts</li>
+              <li>{"Don't reuse passwords from other accounts"}</li>
             </ul>
           </div>
         </div>

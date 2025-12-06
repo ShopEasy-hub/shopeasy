@@ -442,16 +442,16 @@ export function BillingCycle({ appState, onNavigate, selectedPlan }: BillingCycl
           <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-2">
             💡 PayStack Test Mode Instructions
           </h3>
-          <ol className="text-xs text-blue-800 dark:text-blue-200 space-y-1 list-decimal list-inside">
+          <ol className="list-decimal list-inside space-y-1 text-xs text-blue-800 dark:text-blue-200">
             <li>Click "Continue to Payment" above</li>
             <li>In the PayStack popup, select your preferred test card</li>
             <li>Click "I have paid" button</li>
             <li>The popup will show a success message</li>
             <li>Close the popup window (or it may auto-redirect)</li>
-            <li>You'll be redirected back to verify your payment</li>
+            <li>{"You'll be redirected back to verify your payment"}</li>
           </ol>
           <p className="text-xs text-blue-700 dark:text-blue-300 mt-2 italic">
-            If the popup doesn't auto-close, manually close it and refresh this page.
+            {"If the popup doesn't auto-close, manually close it and refresh this page."}
           </p>
         </div>
 

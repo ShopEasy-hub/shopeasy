@@ -183,7 +183,33 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🛠️ TROUBLESHOOTING & FIXES
 
-### 20. **STOCK_TROUBLESHOOTING_GUIDE.md** ⭐⭐
+### 20. **NETWORK_ERROR_QUICK_REFERENCE.md** ⭐⭐⭐
+**What**: Quick fix for NetworkErrors  
+**When**: "NetworkError when attempting to fetch resource"  
+**Contains**:
+- Immediate actions to try
+- Quick diagnostic tests
+- Common problems & solutions
+- 90% of issues fixed here
+
+### 21. **NETWORK_ERROR_TROUBLESHOOTING.md** ⭐⭐
+**What**: Complete NetworkError troubleshooting  
+**When**: Quick fixes didn't work  
+**Contains**:
+- Comprehensive diagnostics
+- Advanced troubleshooting
+- Environment-specific fixes
+- Support information
+
+### 22. **NETWORK_ERROR_FIX_COMPLETE.md** ⭐
+**What**: NetworkError fix implementation  
+**When**: Understanding the fix  
+**Contains**:
+- What was implemented
+- Features added
+- How to use diagnostics
+
+### 23. **STOCK_TROUBLESHOOTING_GUIDE.md** ⭐⭐
 **What**: Stock issue troubleshooting  
 **When**: Stock problems  
 **Contains**:
@@ -191,21 +217,21 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Solutions
 - Diagnostic steps
 
-### 21. **FIX_INSTRUCTIONS_READ_NOW.md**
+### 24. **FIX_INSTRUCTIONS_READ_NOW.md**
 **What**: Old fix instructions (deprecated)  
 **When**: Historical reference  
 **Contains**:
 - Old KV store fixes
 - RLS setup (old)
 
-### 22. **ERRORS_FIXED_SUMMARY.md**
+### 25. **ERRORS_FIXED_SUMMARY.md**
 **What**: Log of errors fixed  
 **When**: Tracking bug fixes  
 **Contains**:
 - Bugs fixed
 - Solutions applied
 
-### 23. **COMPREHENSIVE_FIXES_SUMMARY.md**
+### 26. **COMPREHENSIVE_FIXES_SUMMARY.md**
 **What**: Complete fix history  
 **When**: Full fix log  
 **Contains**:
@@ -216,7 +242,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🔧 TECHNICAL DOCUMENTATION
 
-### 24. **BackendDocs.tsx** (Page)
+### 27. **BackendDocs.tsx** (Page)
 **What**: Backend documentation page  
 **When**: Understanding backend  
 **Contains**:
@@ -224,7 +250,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Database schema
 - Architecture
 
-### 25. **SOLUTION_SUMMARY.md**
+### 28. **SOLUTION_SUMMARY.md**
 **What**: Technical solution details  
 **When**: Technical deep dive  
 **Contains**:
@@ -232,7 +258,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Technical fixes
 - Implementation details
 
-### 26. **🎯_COMPLETE_REBUILD_SUMMARY.md**
+### 29. **🎯_COMPLETE_REBUILD_SUMMARY.md**
 **What**: Rebuild summary  
 **When**: Understanding rebuild  
 **Contains**:
@@ -244,7 +270,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 📝 QUICK REFERENCES
 
-### 27. **QUICK_REFERENCE.md**
+### 30. **QUICK_REFERENCE.md**
 **What**: Quick lookup guide  
 **When**: Need quick answers  
 **Contains**:
@@ -252,14 +278,14 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Quick commands
 - Shortcuts
 
-### 28. **PRODUCT_HISTORY_QUICK_REF.md**
+### 31. **PRODUCT_HISTORY_QUICK_REF.md**
 **What**: Product history quick ref  
 **When**: Using audit trail  
 **Contains**:
 - Quick access
 - Common queries
 
-### 29. **SUPER_ADMIN_QUICK_REF.md**
+### 32. **SUPER_ADMIN_QUICK_REF.md**
 **What**: Super admin quick ref  
 **When**: Admin tasks  
 **Contains**:
@@ -270,28 +296,28 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🚀 SETUP GUIDES
 
-### 30. **START_HERE.md**
+### 33. **START_HERE.md**
 **What**: Basic start guide  
 **When**: New setup  
 **Contains**:
 - Initial setup
 - Configuration
 
-### 31. **START_HERE_2025.md**
+### 34. **START_HERE_2025.md**
 **What**: 2025 version start guide  
 **When**: Latest setup  
 **Contains**:
 - Updated setup
 - Latest features
 
-### 32. **🚀_CLEAN_REBUILD_GUIDE_2025.md**
+### 35. **🚀_CLEAN_REBUILD_GUIDE_2025.md**
 **What**: Clean rebuild instructions  
 **When**: Fresh install  
 **Contains**:
 - Clean install steps
 - Database setup
 
-### 33. **SetupPage.tsx** (Page)
+### 36. **SetupPage.tsx** (Page)
 **What**: In-app setup wizard  
 **When**: First run  
 **Contains**:
@@ -302,35 +328,35 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🎨 SPECIAL GUIDES
 
-### 34. **BEFORE_AFTER_ADMIN.md**
+### 37. **BEFORE_AFTER_ADMIN.md**
 **What**: Admin panel before/after  
 **When**: Understanding improvements  
 **Contains**:
 - Comparison
 - Improvements
 
-### 35. **🛡️_ADMIN_PANEL_SUMMARY.md**
+### 38. **🛡️_ADMIN_PANEL_SUMMARY.md**
 **What**: Admin panel summary  
 **When**: Admin overview  
 **Contains**:
 - Features
 - Access guide
 
-### 36. **🛡️_SUPER_ADMIN_ACCESS.md**
+### 39. **🛡️_SUPER_ADMIN_ACCESS.md**
 **What**: Super admin access guide  
 **When**: Setting up support  
 **Contains**:
 - Access setup
 - Permissions
 
-### 37. **🎯_SUPER_ADMIN_SETUP.md**
+### 40. **🎯_SUPER_ADMIN_SETUP.md**
 **What**: Super admin setup  
 **When**: Enabling super admin  
 **Contains**:
 - Setup steps
 - Configuration
 
-### 38. **🎯_PRODUCT_HISTORY_SETUP.md**
+### 41. **🎯_PRODUCT_HISTORY_SETUP.md**
 **What**: Product history setup  
 **When**: Enabling audit logs  
 **Contains**:
@@ -341,28 +367,28 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 📊 STATUS & COMPLETION
 
-### 39. **FINAL_DELIVERY_SUMMARY.md**
+### 42. **FINAL_DELIVERY_SUMMARY.md**
 **What**: Delivery summary  
 **When**: Project completion  
 **Contains**:
 - Deliverables
 - Status
 
-### 40. **STOCK_FIXES_COMPLETE.md**
+### 43. **STOCK_FIXES_COMPLETE.md**
 **What**: Stock fixes summary  
 **When**: Verifying stock fixes  
 **Contains**:
 - Fixed issues
 - Verification
 
-### 41. **✅_PRODUCT_HISTORY_COMPLETE.md**
+### 44. **✅_PRODUCT_HISTORY_COMPLETE.md**
 **What**: Product history completion  
 **When**: Feature verification  
 **Contains**:
 - Feature status
 - How to use
 
-### 42. **🎉_YOUR_EDITS_COMPLETE.md**
+### 45. **🎉_YOUR_EDITS_COMPLETE.md**
 **What**: Edit completion summary  
 **When**: After updates  
 **Contains**:
@@ -373,7 +399,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🔍 DIAGNOSTIC TOOLS
 
-### 43. **DatabaseStatus.tsx** (Page)
+### 46. **DatabaseStatus.tsx** (Page)
 **What**: Database diagnostic page  
 **When**: Checking DB health  
 **Contains**:
@@ -381,28 +407,28 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Data counts
 - Issues
 
-### 44. **DataViewer.tsx** (Page)
+### 47. **DataViewer.tsx** (Page)
 **What**: Raw data viewer  
 **When**: Debugging data  
 **Contains**:
 - Table browser
 - Query tool
 
-### 45. **DebugPanel.tsx** (Page)
+### 48. **DebugPanel.tsx** (Page)
 **What**: Debug tools  
 **When**: Troubleshooting  
 **Contains**:
 - Debug info
 - Test tools
 
-### 46. **DiagnosticTest.tsx** (Page)
+### 49. **DiagnosticTest.tsx** (Page)
 **What**: System diagnostic tests  
 **When**: Testing system  
 **Contains**:
 - Health checks
 - Tests
 
-### 47. **StockDiagnostic.tsx** (Page)
+### 50. **StockDiagnostic.tsx** (Page)
 **What**: Stock diagnostic tool  
 **When**: Stock issues  
 **Contains**:
@@ -413,7 +439,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 🗄️ SQL FILES
 
-### 48. **000_CLEAN_REBUILD_2025.sql** ⭐⭐⭐
+### 51. **000_CLEAN_REBUILD_2025.sql** ⭐⭐⭐
 **What**: Fresh install migration  
 **When**: New database  
 **Contains**:
@@ -421,7 +447,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Triggers
 - RLS policies
 
-### 49. **CLEAN_REBUILD_2025.sql** ⭐⭐⭐
+### 52. **CLEAN_REBUILD_2025.sql** ⭐⭐⭐
 **What**: Same as 000 (duplicate)  
 **When**: New database  
 **Contains**:
@@ -429,14 +455,14 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Triggers
 - RLS policies
 
-### 50. **HYBRID_MIGRATION.sql** ⭐⭐
+### 53. **HYBRID_MIGRATION.sql** ⭐⭐
 **What**: Existing data migration  
 **When**: Migrating with data  
 **Contains**:
 - Data preservation
 - Table updates
 
-### 51. **ADD_PRODUCT_HISTORY_AUDIT.sql** ⭐⭐
+### 54. **ADD_PRODUCT_HISTORY_AUDIT.sql** ⭐⭐
 **What**: Add audit logs only  
 **When**: Adding audit feature  
 **Contains**:
@@ -444,14 +470,14 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - RLS policies
 - Indexes
 
-### 52. **SUPABASE_RLS_SETUP.sql** ⭐
+### 55. **SUPABASE_RLS_SETUP.sql** ⭐
 **What**: RLS policy setup  
 **When**: Setting up security  
 **Contains**:
 - RLS policies
 - Security setup
 
-### 53. **CRITICAL_FIX_RUN_THIS_SQL.sql** ❌
+### 56. **CRITICAL_FIX_RUN_THIS_SQL.sql** ❌
 **What**: OLD - KV store fix (deprecated)  
 **When**: Don't use  
 **Contains**:
@@ -462,49 +488,49 @@ Complete guide to all documentation files in your ShopEasy POS system.
 
 ## 📘 OTHER GUIDES
 
-### 54. **WHAT_I_BUILT_FOR_YOU.md**
+### 57. **WHAT_I_BUILT_FOR_YOU.md**
 **What**: Feature showcase  
 **When**: Understanding features  
 **Contains**:
 - All features built
 - How they work
 
-### 55. **FIXES_USER_GUIDE.md**
+### 58. **FIXES_USER_GUIDE.md**
 **What**: User-facing fixes guide  
 **When**: User documentation  
 **Contains**:
 - How to use fixes
 - User instructions
 
-### 56. **JWT_ERROR_FIX.md**
+### 59. **JWT_ERROR_FIX.md**
 **What**: JWT error solutions  
 **When**: Auth issues  
 **Contains**:
 - JWT fixes
 - Auth troubleshooting
 
-### 57. **✅_WHICH_SQL_TO_USE.md**
+### 60. **✅_WHICH_SQL_TO_USE.md**
 **What**: SQL file selection guide  
 **When**: Choosing migration  
 **Contains**:
 - Which SQL to use
 - Decision tree
 
-### 58. **▶️_DO_THIS_NOW.md**
+### 61. **▶️_DO_THIS_NOW.md**
 **What**: Urgent action items  
 **When**: Need immediate action  
 **Contains**:
 - Priority tasks
 - Quick fixes
 
-### 59. **🎯_QUICK_ANSWER.md**
+### 62. **🎯_QUICK_ANSWER.md**
 **What**: Quick solutions  
 **When**: Fast answers  
 **Contains**:
 - Common questions
 - Quick answers
 
-### 60. **🚀_ADMIN_ACCESS_GUIDE.md**
+### 63. **🚀_ADMIN_ACCESS_GUIDE.md**
 **What**: Admin access setup  
 **When**: Setting up admins  
 **Contains**:
@@ -586,6 +612,7 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - Set up database → 🎯_READ_THIS_FIRST.md
 - Use admin panel → ADMIN_PANEL_GUIDE.md
 - Fix stock issues → STOCK_TROUBLESHOOTING_GUIDE.md
+- Fix network errors → NETWORK_ERROR_QUICK_REFERENCE.md
 - Migrate data → MIGRATION_TO_SUPABASE_GUIDE.md
 - View audit logs → PRODUCT_HISTORY_GUIDE.md
 
@@ -600,8 +627,13 @@ Complete guide to all documentation files in your ShopEasy POS system.
 - System rebuilt → 🎯_COMPLETE_REBUILD_SUMMARY.md
 - Changes made → ✅_KV_STORE_REMOVAL_COMPLETE.md
 
+**"Error: NetworkError when attempting to fetch resource"**
+1. Try: NETWORK_ERROR_QUICK_REFERENCE.md (90% fix rate)
+2. If still broken: NETWORK_ERROR_TROUBLESHOOTING.md
+3. Run diagnostics: Add ?diagnostic-network=true to URL
+
 ---
 
-**Total Documentation Files**: 60+  
-**Last Updated**: November 2, 2025  
+**Total Documentation Files**: 63+  
+**Last Updated**: December 5, 2024  
 **Status**: ✅ Complete & Current

@@ -1,5 +1,12 @@
 @custom-variant dark (&:is(.dark *));
 
+/* Mobile viewport optimization */
+@media (max-width: 768px) {
+  :root {
+    --font-size: 14px; /* Slightly smaller base font on mobile */
+  }
+}
+
 /* Touch interaction improvements for mobile/tablet */
 .touch-manipulation {
   touch-action: manipulation;
@@ -11,6 +18,23 @@
   button {
     min-height: 44px;
     min-width: 44px;
+  }
+}
+
+/* Responsive table handling - add horizontal scroll on mobile */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Improve form inputs on mobile */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
   }
 }
 

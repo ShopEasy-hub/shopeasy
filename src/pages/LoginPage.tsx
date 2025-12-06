@@ -95,7 +95,7 @@ export function LoginPage({ onSuccess, onSignUp, onForgotPassword }: LoginPagePr
 
         <div className="mt-6 text-center space-y-2">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{' '}
+            {"Don't have an account?"}{' '}
             <button
               onClick={onSignUp}
               className="text-primary hover:underline"

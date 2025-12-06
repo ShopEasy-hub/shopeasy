@@ -490,13 +490,13 @@ export function Transfers({ appState, onNavigate }: TransfersProps) {
 
       {/* New Transfer Dialog */}
       <Dialog open={showNewTransfer} onOpenChange={setShowNewTransfer}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto w-[95vw] sm:w-full">
           <DialogHeader>
             <DialogTitle>Create New Transfer</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleCreateTransfer} className="space-y-6 py-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="source">Source Branch *</Label>
                 <select
@@ -782,20 +782,20 @@ export function Transfers({ appState, onNavigate }: TransfersProps) {
       {/* Transfer Detail Dialog */}
       {selectedTransfer && (
         <Dialog open={showTransferDetail} onOpenChange={setShowTransferDetail}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-auto">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-auto w-[95vw] sm:w-full">
             <DialogHeader>
               <DialogTitle>Transfer Details</DialogTitle>
             </DialogHeader>
 
             <div className="space-y-6 py-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <StatusBadge status={selectedTransfer.status} />
                 <span className="text-sm text-muted-foreground">
                   {new Date(selectedTransfer.createdAt || selectedTransfer.created_at).toLocaleString()}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <Card className="p-4">
                   <div className="flex items-center gap-3 mb-2">
                     <Building2 className="w-5 h-5 text-muted-foreground" />

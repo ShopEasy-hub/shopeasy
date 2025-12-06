@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { testSupabaseConnection, displayNetworkError } from './network-handler';
 
 // Get Supabase credentials from info file
 const supabaseUrl = `https://${projectId}.supabase.co`;
@@ -7,24 +8,100 @@ const supabaseAnonKey = publicAnonKey;
 
 // Validate credentials
 if (!projectId || !publicAnonKey) {
-  console.error('❌ Supabase credentials missing! Check /utils/supabase/info.tsx');
+  console.error('❌ Supabase credentials missing! Check /utils/supabase/info.ts');
   console.error('📝 Current values:', { projectId, publicAnonKey: publicAnonKey ? '***set***' : 'missing' });
 }
 
 if (projectId && publicAnonKey) {
   console.log('✅ Supabase client initializing:', supabaseUrl);
+  
+  // Test connection (non-blocking)
+  testSupabaseConnection(projectId, publicAnonKey)
+    .then(isConnected => {
+      if (isConnected) {
+        console.log('✅ Supabase connection test: SUCCESS');
+      } else {
+        console.warn('⚠️ Supabase connection test: FAILED');
+        console.warn('💡 Add ?diagnostic-network=true to URL for detailed diagnostics');
+      }
+    })
+    .catch(error => {
+      displayNetworkError(error, 'Supabase connection test');
+    });
+} else {
+  console.error('🚨 CRITICAL: Supabase cannot initialize without credentials!');
 }
 
-// Create Supabase client (even with invalid credentials, to prevent undefined errors)
-// The actual API calls will fail with better error messages
+// Create Supabase client with enhanced error handling
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder-key',
+  supabaseUrl, 
+  supabaseAnonKey,
   {
     auth: {
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
+      storage: {
+        getItem: (key) => {
+          try {
+            return localStorage.getItem(key);
+          } catch (e) {
+            console.error('localStorage.getItem error:', e);
+            return null;
+          }
+        },
+        setItem: (key, value) => {
+          try {
+            localStorage.setItem(key, value);
+          } catch (e) {
+            console.error('localStorage.setItem error:', e);
+          }
+        },
+        removeItem: (key) => {
+          try {
+            localStorage.removeItem(key);
+          } catch (e) {
+            console.error('localStorage.removeItem error:', e);
+          }
+        },
+      },
+    },
+    global: {
+      headers: {
+        'x-client-info': 'shopeasy-pos',
+      },
+      fetch: async (url, options = {}) => {
+        try {
+          // Use native fetch with added error handling
+          const response = await fetch(url, options);
+          
+          // Log failed requests for debugging
+          if (!response.ok && response.status !== 404) {
+            console.warn(`⚠️ HTTP ${response.status} from ${url}`);
+          }
+          
+          return response;
+        } catch (error: any) {
+          // Enhanced error logging for network errors
+          if (error.message?.includes('NetworkError') || error.message?.includes('Failed to fetch')) {
+            console.error('🚨 NetworkError detected:');
+            displayNetworkError(error, `fetch to ${url}`);
+            
+            // Show user-friendly message
+            console.error('');
+            console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            console.error('🔧 QUICK FIX:');
+            console.error('  1. Check your internet connection');
+            console.error('  2. Disable browser extensions temporarily');
+            console.error('  3. Try incognito/private mode');
+            console.error('  4. Add ?diagnostic-network=true for details');
+            console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            console.error('');
+          }
+          
+          throw error;
+        }
+      },
     },
     realtime: {
       params: {

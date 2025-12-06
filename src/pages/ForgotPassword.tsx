@@ -60,7 +60,7 @@ export function ForgotPassword({ onBack }: ForgotPasswordProps) {
             </div>
 
             <div className="text-xs text-muted-foreground">
-              Didn't receive the email? Check your spam folder or{' '}
+              {"Didn't receive the email? Check your spam folder or"}{' '}
               <button
                 onClick={() => setSuccess(false)}
                 className="text-primary hover:underline"
