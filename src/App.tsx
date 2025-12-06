@@ -146,10 +146,6 @@ export default function App() {
       console.log('✅ Session check complete:', session ? 'Logged in' : 'Not logged in');
       
       if (session) {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
         // User is logged in, fetch user profile and restore appState
         try {
           console.log('📋 Restoring user session data...');
@@ -216,15 +212,6 @@ export default function App() {
           // If we can't restore the profile, force login
           setCurrentPage('login');
         }
-<<<<<<< HEAD
-=======
-=======
-        // User is logged in, fetch user data
-        // For now, we'll just set a default state
-        // In production, you'd fetch the user profile from the backend
-        setCurrentPage('dashboard');
->>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
->>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
       } else {
         setCurrentPage('login');
       }

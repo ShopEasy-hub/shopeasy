@@ -25,19 +25,7 @@
 // - No trailing slash at the end
 // - Must match your deployed site exactly
 //
-<<<<<<< HEAD
 const PRODUCTION_URL = 'https://your-production-domain.com';
-=======
-<<<<<<< HEAD
-const PRODUCTION_URL = 'https://shopeasy-lemon.vercel.app';
-=======
-<<<<<<< HEAD
-const PRODUCTION_URL = 'https://your-production-domain.com';
-=======
-const PRODUCTION_URL = 'https://shopeasy-lemon.vercel.app';
->>>>>>> beff73edb9b900dd348647610707c57653a62d28
->>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
->>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
 // ================================================================
 
 // Automatically detect if we're in production or development
