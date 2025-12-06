@@ -1,5 +1,9 @@
 @custom-variant dark (&:is(.dark *));
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
 /* Mobile viewport optimization */
 @media (max-width: 768px) {
   :root {
@@ -7,6 +11,11 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
+>>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
 /* Touch interaction improvements for mobile/tablet */
 .touch-manipulation {
   touch-action: manipulation;
@@ -21,6 +30,10 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
 /* Responsive table handling - add horizontal scroll on mobile */
 @media (max-width: 768px) {
   table {
@@ -38,6 +51,11 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
+>>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5
 /* Print styles for receipts */
 @media print {
   body * {
@@ -268,4 +286,12 @@
 
 html {
   font-size: var(--font-size);
+<<<<<<< HEAD
 }
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
+>>>>>>> ebeaf87865757511e4682def2b18384c0a64a6d5

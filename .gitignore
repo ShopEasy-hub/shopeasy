@@ -1,4 +1,10 @@
 <<<<<<< HEAD
+.vs/
+node_modules/
+dist/
+*.log
+=======
+<<<<<<< HEAD
 # dependencies
 node_modules/
 
@@ -24,3 +30,4 @@ dist/
 # Ignore local env file
 .env
 >>>>>>> beff73edb9b900dd348647610707c57653a62d28
+>>>>>>> cf32f115a497201c6f0d744b46c0286b712ea750
