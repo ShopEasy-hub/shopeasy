@@ -1,0 +1,74 @@
+-- ============================================================================
+-- ⚠️ DEPRECATED - DO NOT USE THIS FILE
+-- ============================================================================
+-- This file is for the OLD kv_store system which has been REPLACED.
+--
+-- ❌ OLD SYSTEM (This file):
+--    - kv_store_088c2cd9 table
+--    - Key-value storage
+--    - RLS policy fixes
+--
+-- ✅ NEW SYSTEM (Use instead):
+--    - Proper PostgreSQL tables
+--    - Relational database structure
+--    - Migration: /supabase/migrations/000_CLEAN_REBUILD_2025.sql
+--
+-- ============================================================================
+-- WHAT YOU SHOULD DO INSTEAD:
+-- ============================================================================
+--
+-- 1. Go to Supabase Dashboard → SQL Editor
+-- 2. Run THIS file instead:
+--    /supabase/migrations/000_CLEAN_REBUILD_2025.sql
+--
+-- 3. This will create all NEW tables:
+--    ✅ organizations
+--    ✅ branches
+--    ✅ warehouses
+--    ✅ products
+--    ✅ inventory (replaces stock)
+--    ✅ stock (warehouse stock)
+--    ✅ transfers
+--    ✅ sales
+--    ✅ sale_items
+--    ✅ returns
+--    ✅ expenses
+--    ✅ suppliers
+--    ✅ user_profiles
+--    ✅ audit_logs
+--    ✅ transfer_items
+--
+-- ============================================================================
+-- WHY THE CHANGE?
+-- ============================================================================
+--
+-- The old kv_store_088c2cd9 table had critical issues:
+-- ❌ Duplicate stock entries
+-- ❌ Broken sync between warehouse and branches
+-- ❌ Stock reset to zero on refresh
+-- ❌ No referential integrity
+-- ❌ Hard to query and debug
+-- ❌ Poor performance
+--
+-- The new PostgreSQL structure:
+-- ✅ No duplicates (proper constraints)
+-- ✅ Automatic sync (database triggers)
+-- ✅ Persistent data (foreign keys)
+-- ✅ Referential integrity
+-- ✅ Easy to query (proper tables)
+-- ✅ Fast performance (indexes)
+--
+-- ============================================================================
+-- MORE INFORMATION:
+-- ============================================================================
+--
+-- Read these guides:
+-- - /📍_CURRENT_STATUS.md           → Current system status
+-- - /⚡_NO_MORE_KV_STORE.md         → Why KV store was removed
+-- - /🔧_DATABASE_MIGRATION_COMPLETE.md → Migration details
+-- - /DATABASE_STRUCTURE_2025.md    → New table structure
+--
+-- ============================================================================
+
+-- This file is kept for historical reference only.
+-- DO NOT RUN THIS SQL - It will fail because kv_store_088c2cd9 no longer exists.
